@@ -1,27 +1,35 @@
 const mongoose = require('mongoose');
 
 // Connect to MongoDB
-mongoose.connect('your-mongodb-url');
+mongoose.connect('mongodb+srv://admin-key:RRLZ7KobHoKfKw01@cluster0.plzw2gv.mongodb.net/udemy-clone');
 
 // Define schemas
 const AdminSchema = new mongoose.Schema({
-    // Schema definition here
-});
+    userName: String,
+    password: String,
+},{versionKey:false}
+);
 
 const UserSchema = new mongoose.Schema({
-    // Schema definition here
-});
+    userName: String,
+    password: String,
+    courses: { type: [String], required: false },
+},{versionKey:false});
 
 const CourseSchema = new mongoose.Schema({
-    // Schema definition here
-});
+    title: String, 
+    description: String, 
+    price: Number, 
+    imageLink: String, 
+    published: Boolean,
+},{versionKey:false});
 
-const Admin = mongoose.model('Admin', AdminSchema);
-const User = mongoose.model('User', UserSchema);
-const Course = mongoose.model('Course', CourseSchema);
+const AdminModel = mongoose.model('Admin', AdminSchema);
+const UserModel = mongoose.model('User', UserSchema);
+const CourseModel = mongoose.model('Course', CourseSchema);
 
 module.exports = {
-    Admin,
-    User,
-    Course
+    AdminModel,
+    UserModel,
+    CourseModel
 }
