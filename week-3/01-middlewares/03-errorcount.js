@@ -20,7 +20,14 @@ app.post('/user', function(req, res) {
 });
 
 app.get('/errorCount', function(req, res) {
+  console.log("let check errorCount",errorCount);
   res.status(200).json({ errorCount });
 });
+
+app.use((error, req,res, next)=>{
+  errorCount++;
+  res.status(404);
+  next();
+})
 
 module.exports = app;

@@ -1,6 +1,10 @@
-function userMiddleware(req, res, next) {
-    // Implement user auth logic
-    // You need to check the headers and validate the user from the user DB. Check readme for the exact headers to be expected
+const { UserModel} = require("../db/index");
+
+async function userMiddleware(req, res, next) {
+    const {username: userName, password} = req.headers;
+    const user = await UserModel.findOne({userName, password});
+    if(!user) return res.status(404).json({error: "Forbidden: user not present"});
+    next();
 }
 
 module.exports = userMiddleware;

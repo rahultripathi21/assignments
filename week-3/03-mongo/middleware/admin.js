@@ -1,7 +1,11 @@
+const {AdminModel, CourseModel, UserModel} = require("../db/index");
+
 // Middleware for handling auth
-function adminMiddleware(req, res, next) {
-    // Implement admin auth logic
-    // You need to check the headers and validate the admin from the admin DB. Check readme for the exact headers to be expected
+async function adminMiddleware(req, res, next) {
+    const {username: userName, password} = req.headers;
+    const admin = await AdminModel.findOne({userName, password});
+    if(!admin) return res.status(404).json({error: "Forbidden: admin not present"});
+    next();
 }
 
 module.exports = adminMiddleware;
